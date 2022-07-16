@@ -1,0 +1,43 @@
+﻿@model List<personelimmvc.Models.EntityFramework.personel>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/shared/Layout.cshtml";
+}
+
+<h2>Personel sayfası</h2>
+@Html.ActionLink("Yeni Personel","Yeni",null , new {@class="btn btn-success" })
+@* action link ile yeni personel yazılı yeni action resultunu kullanarak bir buton yaptık *@
+<table class="table table-bordered">
+<thead>
+<tr>
+    <th>Ad</th>
+    <th>Soyad</th>
+    <th>Maaş</th>
+    <th>Yaş</th>
+    <th>Doğum Tarihi</th>
+    <th>Cinsiyet</th>
+    <th>Evlimi</th>
+</tr>
+
+</thead>
+    <tbody>
+@foreach (var getir in Model)
+{
+    <tr>
+        <td>@getir.ad</td>
+        <td>@getir.soyad</td>
+        <td>@getir.maas</td>
+        <td>@(DateTime.Now.Year-getir.dogumtarihi.Value.Year)</td>
+        @*yaşı hesaplarken bugünün tarihinden veritabanından gelen doğum tarihi çıkarılıyor*@
+        <td>@getir.dogumtarihi.Value.ToString("dd-MM-yyyy")</td>
+
+        <td>@(getir.cinsiyet==true?"Erkek":"Kadın")</td>
+        @* cinsiyetten gelen değer 1 ise erkek değilse kadın yazdır*@
+        <td>@(getir.evlimi==true?"Evli":"Bekar")</td>
+        <td><a class="btn btn-success" href="/personel/guncelle/">Güncelle</a></td>
+        <td><a class="btn btn-danger" href="/personel/Sil/">Sil</a></td>
+    </tr>
+}
+
+    </tbody>
+</table>

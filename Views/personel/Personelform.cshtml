@@ -1,0 +1,62 @@
+﻿@model personelimmvc.view_models.Personelformviewmodels
+@* model olarak personelformviewmodels.cs sayfasını aldık. view  model yapısını 
+dropdown kullanacağımız için işleme aldık *@
+@{
+    ViewBag.Title = "Personelform";
+    Layout = "~/Views/shared/Layout.cshtml";
+}
+@using (Html.BeginForm("kaydet","personel", FormMethod.Post)) {@*  form açtık
+ kaydet bizi action result ismimiz personel ise kaydet actionresultumuzun bulunduğu conroler
+  html helper yapısını kullandık         *@
+
+<div class="form-group">
+@Html.LabelFor(m=>m.personel.ad)
+@Html.TextBoxFor(m=>m.personel.ad , new {@class="form-control" })
+@*class ile textboxa özellik verdik*@
+@* yukarda bir adet label ve 1 adet texboxa personelformviewmodels.cs den gelen 
+  personeller propertisi adında tanımlanan metottan ad kısımlarını getirdik  *@
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.personel.soyad)
+    @Html.TextBoxFor(m => m.personel.soyad, new { @class = "form-control" })
+
+</div>
+<div class="form-group">@Html.LabelFor(m=>m.personel.departmanid)
+  
+@Html.DropDownListFor(m => m.personel.departmanid, new SelectList(Model.departmanlar, "id","ad"),"departman seçiniz", new {@class="form-control" })
+    @*yukarıda drowownlist olışturudu içine de personelcontrolerda yeni actionresultundan gelen Model ile departmanlardan
+         id ve ad kısımları selectlist yani seçilebilir liste şeklinde alındı
+        m => m.personeller.departmanid demek modelin (m ile gösterilir model)
+    departmanid özelliği için *@
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.personel.maas)
+    @Html.TextBoxFor(m => m.personel.maas, new { @class = "form-control" })
+
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.personel.dogumtarihi)
+    @Html.TextBoxFor(m => m.personel.dogumtarihi, new { @class = "form-control" })
+
+</div>
+<div class="radio"> <label>
+    @Html.RadioButtonFor(m => m.personel.cinsiyet, true)Erkek
+</label>
+</div>
+@*radio buton için eğer personeller tablosundan cinsiyet değeri true ise erkek seçilmiş olsun*@
+    <div class="radio">
+        <label>
+            @Html.RadioButtonFor(m => m.personel.cinsiyet, false)Kadın
+        </label>
+</div>
+   <div class="checkbox">
+       <label>
+           @Html.CheckBoxFor(m => m.personel.evlimi.Value)Evliyseniz seçiniz
+       </label>   
+      
+
+       </div>
+       <button type="submit" class="btn btn-default">Kaydet</button>
+}
